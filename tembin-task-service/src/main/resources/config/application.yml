@@ -1,0 +1,74 @@
+spring:
+  datasource:
+    druid:
+      url: 127.0.0.1:3306/task
+      username: user
+      password: 1234
+      driver-class-name: com.mysql.jdbc.Driver
+      max-open-prepared-statements: 20
+      initial-size: 2
+      min-idle: 10
+      max-active: 60
+      test-on-borrow: true
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-While-Idle: true
+      test-on-return: false
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 50
+      filters: stat,wall,config
+      #阿里巴巴druid filter和view配置
+      web-stat-filter:
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: false
+        session-stat-max-count: 1000
+        profile-enable: true
+      stat-view-servlet:
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username:
+        login-password:
+        allow: 127.0.0.1
+        deny:
+  jpa:
+    database: mysql
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  aop:
+    proxy-target-class: true
+    auto: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5674
+    connection-timeout: 3000
+    password: guest
+    username: guest
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 20
+        prefetch: 1
+  cas:
+    login_url:
+    prefix_url:
+    callback_url:
+    default_url:
+#任务注解注册扫描的包
+  autoRegisterTask:
+    package: com.tembin
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 30000
+        loggerLevel: basic
+swagger2:
+  package: com.tembin.task.web

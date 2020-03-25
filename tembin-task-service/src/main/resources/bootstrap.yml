@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: task-manager
+  cloud:
+    config:
+      allowOverride: false
+      enabled: true
+      profile: ${spring.profiles.active}
+      name: ${spring.application.name}
+      username: user
+      password: 123
+      discovery:
+        enabled: true
+        service-id: config-server
+server:
+  port: 8091
+  servlet:
+    context-path: /task-manager
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1/eureka/eureka/
+  instance:
+    prefer-ip-address: true
+    home-page-url-path: ${server.servlet.context-path}/swagger-ui.html
+    status-page-url-path: ${server.servlet.context-path}/actuator/info
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+    metadata-map:
+      management:
+        context-path: ${server.servlet.context-path}/actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
